@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<br>
+<section class="content" style="display: grid; place-items: center;">
+    <!-- Default box -->
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">{{ titulo_pagina }}</h3>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {% if form.errors %}
+                        <div class="alert alert-danger">
+                            <ul>
+                            {% for field in form %}
+                                {% if field.errors %}
+                                    {{ field.label }}
+                                        {% for error in field.errors %}
+                                            ->{{ error }}
+                                        {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </form>
+                                
+            </div>
+        </div>
+        <br><br>
+    </div>
+</section>
+
+{% endblock %}
+
+
+<div class="form-group">
+    <label for="{{ form.codigo_articulo.id_for_label }}">Código del Artículo:</label>
+    {{ form.codigo_articulo }}
+</div>
+<div class="form-group">
+    <label for="{{ form.nombre_articulo.id_for_label }}">Nombre del Artículo:</label>
+    {{ form.nombre_articulo }}
+</div>
+<div class="form-group">
+    <label for="{{ form.nombre_largo_articulo.id_for_label }}">Nombre largo:</label>
+    {{ form.nombre_largo_articulo }}
+</div>
+<div class="form-group">
+    <label for="{{ form.categoria.id_for_label }}">Categoría:</label>
+    {{ form.categoria }}
+</div>
+<div class="form-group">
+    <label for="{{ form.unidad_medida.id_for_label }}">Unidad de medida:</label>
+    {{ form.unidad_medida }}
+</div>
+<div class="form-group">
+    <label for="{{ form.precio.id_for_label }}">Precio:</label>
+    {{ form.precio }}
+</div>
+<div class="form-group">
+    <label for="{{ form.base_iva.id_for_label }}">Base IVA:</label>
+    {{ form.base_iva }}
+</div>
+<div class="form-group">
+    <label for="{{ form.estado.id_for_label }}">Estado:</label>
+    {{ form.estado }}
+</div>

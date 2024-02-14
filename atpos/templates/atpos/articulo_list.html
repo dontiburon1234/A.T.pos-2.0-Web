@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<br>
+<!-- Main content -->
+<section class="content" style="display: grid; place-items: center;">
+    {% if object_list %}
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-header">
+                <h3>Artículos</h3>
+            </div>
+            <div class="card-body">
+                <table id="myTable" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Nombre</th>
+                            <th>Nombre largo</th>
+                            <th>Categoria</th>
+                            <th>Medida</th>
+                            <th>IVA</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for articulo in object_list %}
+                        <tr>
+                            <td>{{ articulo.codigo_articulo }}</td>
+                            <td>{{ articulo.nombre_articulo }}</td>
+                            <td>{{ articulo.nombre_largo_articulo }}</td>
+                            <td>{{ articulo.categoria }}</td>
+                            <td>{{ articulo.unidad_medida }}</td>
+                            <td>{{ articulo.base_iva }}</td>
+                            <td>
+                                {% if articulo.estado == '1' %}
+                                <button id="boton_estado_{{articulo.id}}"
+                                    onclick="cambiarEstado('{{articulo.id}}', 'articulo')"
+                                    class="btn btn-success activo">Activo</button>
+                                {% else %}
+                                <button id="boton_estado_{{articulo.id}}"
+                                    onclick="cambiarEstado('{{articulo.id}}', 'articulo')"
+                                    class="btn btn-danger inactivo">Inactivo</button>
+                                {% endif %}
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <div class="mx-auto">
+                                        <a class="btn btn-secondary" href="{% url 'articulo-codigo-alterno' articulo.id %}">
+                                            <i class="fas fa-list-alt"></i></a>
+                                        <a class="btn btn-info" href="{% url 'alterno' articulo.id %}">
+                                            <i class="fas fa-cash-register"></i></a>
+                                        <a class="btn btn-warning" href="{% url 'articulo-update' articulo.id %}">
+                                            <i class="fa fa-pencil-alt"></i></a>
+                                        <a class="btn btn-danger" href="{% url 'articulo-delete' articulo.id %}">
+                                            <i class="fa fa-times"></i></a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'articulo-add' %}">
+                    <button type="button" class="btn btn-info">Crear artículo</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <p>Aún no se han creado artículos.</p>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'articulo-add' %}">
+                    <button type="button" class="btn btn-info">Crear artículo</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    {% endif %}
+    <br><br>
+</section>
+
+<script>
+    $(document).ready(function () {
+        var table = $('#myTable').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+
+            "language": {
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            }
+        });
+        new $.fn.dataTable.FixedHeader( table );
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<br>
+<section class="content" style="display: grid; place-items: center;">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h1>Caja</h1>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Save">
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="input_numero_caja">Caja número</label>
+        <input type="text" class="form-control" id="input_numero_caja" name="numero_caja" value="{{ numeroCaja }}" readonly>
+    </div>
+    <div class="form-group">
+        <label for="inputEstado">Estado</label>
+        {{ form.estado }}
+    </div>
+    <div class="form-group">
+        <label for="controlSelect2">Almacén:</label>
+        <select name="almacen">
+            {% for almacen in almacenes %}
+            <option value="{{ almacen.id }}">{{ almacen }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <input type="submit" value="Save">
+</form>

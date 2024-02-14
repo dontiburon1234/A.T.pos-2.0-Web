@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<br>
+<section class="content" style="display: grid; place-items: center;">
+  <div class="col-md-10">
+    <div class="card">
+      <div class="card-header">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <h3>Códigos alternos</h3>
+            </div>
+            <div class="col">
+              <td>{{ articulo.codigo_articulo }}</td>
+              <td>{{ articulo.nombre_articulo }}</td>
+              <td>{{ articulo.categoria }}</td>
+              <td>{{ articulo.unidad_medida }}</td>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <table id="myTable" class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th>Código</th>
+              <th>Descripción</th>
+              <th>Cantidad</th>
+              <th>Precio</th>
+              <th>Lista de precios</th>
+              <th>Estado</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Filas agregadas por el usuario se insertarán aquí -->
+            {% for aa in alterno %}
+            <tr>
+              <td>{{ aa.nuevo_codigo_articulo }}-{{aa.id}}</td>
+              <td>{{ aa.nombre_articulo }}</td>
+              <td>{{ aa.cantidad }}</td>
+              <td>{{ aa.precio }}</td>
+              <td>{{ aa.listaPrecio }}</td>
+              <td>
+                {% if aa.estado == '1' %}
+                <button id="boton_estado_{{aa.id}}" onclick="cambiarEstado('{{aa.id}}', 'alterno')"
+                  class="btn btn-success activo">Activo</button>
+                {% else %}
+                <button id="boton_estado_{{aa.id}}" onclick="cambiarEstado('{{aa.id}}', 'alterno')"
+                  class="btn btn-danger inactivo">Inactivo</button>
+                {% endif %}
+              </td>
+              <td>
+                <div class="btn-group btn-group-sm" role="group">
+                  <div class="mx-auto">
+                    <a class="btn btn-warning" href="{% url 'articulo-update' articulo.id %}">
+                      <i class="fa fa-pencil-alt"></i></a>
+                    <a class="btn btn-danger" href="{% url 'articulo-delete' articulo.id %}">
+                      <i class="fa fa-times"></i></a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <button id="addRowBtn" class="btn btn-info">Agregar alterno</button>
+      </div>
+      <div class="card-footer">
+        <a class="btn btn-secondary" href="{% url 'articulo-list' %}">
+          <button type="text" class="btn btn-info">Listado</button></a>
+      </div>
+    </div>
+  </div>
+  <div id="resultado"></div>
+  <img id="imagen">
+  <br><br><br><br>
+</section>
+
+<script>
+  function agregarAlterno(aa) {
+    const newRow = document.createElement("tr");
+    newRow.innerHTML = `
+        <td><input type="text" name="nuevo_codigo_articulo" placeholder="Nuevo código"></td>
+        <td><input type="text" value="Botón dorado" name="nombre_articulo" placeholder="nombre articulo"></td>
+        <td><input id="alter" type="text" value="1" name="cantidad" placeholder="Cantidad"></td>
+        <td>5000,00</td>
+        <td>`+ aa.listaPrecio + `</td>
+        <td>
+          <button type="button" onclick="enviarAlterno()">Guardar</button>
+        </td>
+        <td>
+          <button type="button" class="removeRowBtn">Eliminar</button>
+        </td>
+      `;
+    tableBody.appendChild(newRow);
+  }
+
+  function removerAlterno(event) {
+    if (event.target.classList.contains("removeRowBtn")) {
+      event.target.closest("tr").remove();
+    }
+  }
+
+  function enviarAlterno() {
+    console.log('enviarAlterno Como vamos vamos bien!')
+  }
+
+  const tableBody = document.querySelector("#myTable tbody");
+  const addRowBtn = document.querySelector("#addRowBtn");
+
+  document.addEventListener("DOMContentLoaded", function () {
+    addRowBtn.addEventListener("click", agregarAlterno);
+    tableBody.addEventListener("click", removerAlterno);
+  });
+
+  // Usamos JavaScript para hacer la solicitud fetch y mostrar los datos en el div
+  fetch(`http://127.0.0.1:8000/articulo/36/alterno/`) // Reemplaza '/ruta-a-tu-vista/' con la URL de tu vista
+    .then(response => response.json())
+    .then(data => {
+      const resultadoDiv = document.getElementById('resultado');
+      resultadoDiv.innerHTML = `Mensaje: ${data.mensaje}, Valor: ${data.valor}`;
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+
+
+
+
+  fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits')
+    .then(response => response.json())
+    .then(commits => alert(commits[0].author.login));
+
+  function gifing() {
+    const apiKey = 'VGXdDdRURuGp94qIeSrnUb7Tdd61at8B';
+    const peticion = fetch(`http://api.giphy.com/v1/gifs/random?api_key=${apiKey}`);
+    peticion
+      .then(resp => resp.json())
+      .then(({ data }) => {
+        const { url } = data.images.original;
+        const img = document.getElementById("imagen")
+        img.src = url;
+        document.innerHTML = img
+      })
+      .catch(console.warn);
+  }
+  gifing();
+</script>
+{% endblock %}
+
+<!-- <script> -->
+
+// const nuevoAlterno =(articulo_id)=>{
+// console.log('articulo_id->', articulo_id)
+// // const nuevo_alterno = fetch(`/articulo/mine/${articulo_id}/`)
+// // nuevo_alterno.then(resp=>console.log(resp)).catch(console.warn)
+// }
+
+// const codigoAlternoNuevo = document.getElementById("codigo-alterno-nuevo")
+// codigoAlternoNuevo.addEventListener("submit", nuevoAlterno(articulo_id))
+
+
+// fetch(`http://127.0.0.1:8000/global/`)
+// .then(resp => resp.json())
+// .then(data => document.getElementById("tweets").innerHTML = loadTweets(data))
+// .catch(console.warn)
+
+<!-- </script> -->

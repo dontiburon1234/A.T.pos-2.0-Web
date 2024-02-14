@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<br>
+<!-- Main content -->
+<section class="content" style="display: grid; place-items: center;">
+    <!-- Default box -->
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card">
+                <div class="card-body">
+                    {% if codigosAlternosEliminar %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <p>{{ mensaje }}</p>
+                        {{ form }}
+                        <button type="submit" class="btn btn-info">Borrar artículo</button>
+                    </form>
+                    {% else %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <p>Está seguro de borrar el artículo {{ object }}?</p>
+                        {{ form }}
+                        <button type="submit" class="btn btn-info">Borrar artículo</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

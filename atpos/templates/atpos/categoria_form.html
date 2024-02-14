@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<br>
+<section class="content" style="display: grid; place-items: center;">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h1>Categoría</h1>
+            </div>
+            <div class="card-body">
+
+                <form method="post" class="form-horizontal">
+                    {% csrf_token %}
+                    <table>
+                        {{ form.as_table }}
+                    </table>
+                    <div class="col-12">
+                        <div class="card-footer">
+                            
+                        </div>
+                    </div>
+                    <input type="submit" value="Save">
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div>
+    <div id="resultado">
+        <!-- Aquí se mostrarán los datos del servidor -->
+    </div>
+</div>
+<script>
+    // Usamos JavaScript para hacer la solicitud fetch y mostrar los datos en el div
+    fetch('http://127.0.0.1:8000/alterno/36/') // Reemplaza '/ruta-a-tu-vista/' con la URL de tu vista
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.mensaje);
+            console.log(data.valor);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+</script>

@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<br>
+<!-- Main content -->
+<section class="content" style="display: grid; place-items: center;">
+    {% if object_list %}
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-header">
+                <h3>Listado de impuestos</h3>
+            </div>
+            <div class="card-body">
+                <table id="example2" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Base Impuesto</th>
+                        <th>Nombre base impuesto</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for baseiva in object_list %}
+                    <tr>
+                        <td>{{baseiva.base_iva}}</td>
+                        <td>{{baseiva.nombre_base_iva}}</td>
+                        <td>
+                        {% if baseiva.estado == '1' %}
+                            <button id="{{baseiva.id}}"
+                            
+                            class="btn btn-success activo">Activo</button>
+                        {% else %}
+                        <button id="{{baseiva.id}}"
+                            
+                            class="btn btn-danger inactivo">Inactivo</button>
+                        {% endif %}
+                        </td>
+                        <td>
+                            <a class="btn btn-info" href="{% url 'baseiva-update' baseiva.id %}">
+                                <i class="fas fa-pen"></i></a>
+                            <a class="btn btn-danger" href="{% url 'baseiva-delete' baseiva.id %}">
+                                    <i class="fas fa-times"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+            <div class="card-footer">
+                <a href="{% url 'baseiva-add' %}">
+                    <button type="submit" class="btn btn-info">Crear base impuesto</button>
+                </a>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <p>Aún no se han creado los impuestos</p>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'baseiva-add' %}">
+                    <button type="submit" class="btn btn-info">Crear base impuesto</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

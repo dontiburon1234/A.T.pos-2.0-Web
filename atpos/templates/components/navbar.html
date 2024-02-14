@@ -1,0 +1,75 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-color-nav">
+  <a class="navbar-brand" href="{% url 'tablero' %}">
+    <img src="{% static 'img/LogoATpos200px.png' %}" width="30" height="30" alt="">
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse colortext" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Administración
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item text-dark" href="{% url 'user_list' %}">Usuarios</a>
+          <a class="dropdown-item text-dark" href="{% url 'crear_grupo' %}">Cargos</a>
+          <a class="dropdown-item text-dark" href="{% url 'almacen-list' %}">Almacén</a>
+          <a class="dropdown-item text-dark" href="{% url 'cajaserie-list' %}">Cajas</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-dark" href="{% url 'empresa-detail' user.empresa.id %}">Empresa</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Inventario
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item text-dark" href="{% url 'categoria-list' %}">Categoría</a>
+          <a class="dropdown-item text-dark" href="{% url 'unidadmedida-list' %}">UnidadMedida</a>
+          <a class="dropdown-item text-dark" href="{% url 'baseiva-list' %}">Impuestos</a>
+          <a class="dropdown-item text-dark" href="{% url 'listaprecios-list' %}">Lista de precios</a>
+          <a class="dropdown-item text-dark" href="{% url 'articulo-list' %}">Articulo</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-dark" href="#">Ajustes</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" href="#">Disabled</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Right navbar links -->
+  <ul class="navbar-nav ml-auto">
+    <!-- User Account: style can be found in dropdown.less -->
+
+    <li class="dropdown user user-menu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <span class="hidden-xs">{{ user.username }}</span>
+      </a>
+      <ul class="dropdown-menu">
+        <!-- User image -->
+        <li class="user-header">
+          <p>{{ user.first_name }} {{ user.last_name }}</p>
+          <a href="{% url 'password_change' %}">Cambiar password</a>
+        </li>
+        
+        <!-- Menu Footer-->
+        <li class="user-footer">
+          <div class="pull-right">
+            <a href="{% url 'logout' %}" class="btn btn-default btn-flat">Salida</a>
+          </div>
+        </li>
+      </ul>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+        <i class="fas fa-th-large"></i>
+      </a>
+    </li>
+  </ul>
+</nav>

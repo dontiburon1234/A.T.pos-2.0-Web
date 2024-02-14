@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<br>
+<section class="content" style="display: grid; place-items: center;">
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Creación de código alterno</h3>
+        {{ datosArticulo }}
+      </div>
+      <div class="card-body">
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_div }}
+          <input type="submit" value="Guardar">
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+<p><label>Articulo</label>{{ form.articulo }} </p>
+          <p><label>Nuevo nombre</label>{{ form.nombre_articulo }}</p>
+          <p><label>Nuevo código</label>{{ form.nuevo_codigo_articulo }} </p>
+          <p><label>Cantidad</label>{{ form.cantidad }} </p>
+          <p><label>Precio</label>{{ form.precio }} </p>
+          <p><label>Lista de precios</label>{{ form.listaPrecio }} </p>
+
+<form method="post">
+  {% csrf_token %}
+
+  <p>
+    <label for="id_articulo">Articulo:</label>
+    <input type="text" name="articulo" maxlength="20" required="" id="id_codigo_articulo">
+  </p>
+
+
+  <p>
+    <label for="id_codigo_articulo">Codigo articulo:</label>
+    <input type="text" name="codigo_articulo" maxlength="20" required="" id="id_codigo_articulo">
+
+
+  </p>
+
+
+  <p>
+    <label for="id_posicion">Posicion:</label>
+    <input type="number" name="posicion" value="2" required="" id="id_posicion">
+
+
+  </p>
+
+
+  <p>
+    <label for="id_cantidad">Cantidad:</label>
+    <input type="number" name="cantidad" value="1" required="" id="id_cantidad">
+
+
+  </p>
+
+
+  <p>
+    <label for="id_precio">Precio:</label>
+    <input type="number" name="precio" value="0" step="0.01" required="" id="id_precio">
+
+
+  </p>
+
+
+  <p>
+    <label for="id_listaPrecio">ListaPrecio:</label>
+    <select name="listaPrecio" id="id_listaPrecio">
+      <option value="">---------</option>
+
+      <option value="10">Base</option>
+
+      <option value="4">Base_martin</option>
+
+      <option value="24">Base_yedaro</option>
+
+      <option value="22">LP_Cedritos</option>
+
+      <option value="25">VIP yedaro</option>
+
+      <option value="13">Zeta</option>
+
+    </select>
+
+
+  </p>
+
+
+  <p>
+    <label for="id_descripcion">Descripcion:</label>
+    <input type="text" name="descripcion" maxlength="30" required="" id="id_descripcion">
+
+
+  </p>
+
+
+  <p>
+    <label for="id_estado">Estado:</label>
+    <select name="estado" id="id_estado">
+      <option value="0">Inactivo</option>
+      <option value="1" selected="">Activo</option>
+    </select>
+  </p>
+  <p>
+    <label for="id_empresa">Empresa:</label>
+    <select name="empresa" required="" id="id_empresa">
+      <option value="">---------</option>
+      <option value="1">PROCESSUS IT SAS</option>
+      <option value="16">Consultores en comunicaciones IN-VOZ</option>
+      <option value="17" selected="">DISTRIBELL DISTRIBUCIONES INSTITUCIONALES SAS</option>
+      <option value="18">Monttalti</option>
+      <option value="19">La Mina Adornos SAS</option>
+    </select>
+  </p>
+
+  <input type="submit" value="Save">
+</form>

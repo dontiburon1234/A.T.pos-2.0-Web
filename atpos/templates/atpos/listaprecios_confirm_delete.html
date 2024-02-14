@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<br>
+<!-- Main content -->
+<section class="content" style="display: grid; place-items: center;">
+    <!-- Default box -->
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card">
+                <div class="card-body">
+                    {% if almacenAsociado %}
+                    <p>{{ mensaje }}</p>
+                    <a href="{% url 'listaprecios-list' %}">
+                        <button type="button" class="btn btn-info">Lista de precios</button>
+                    </a>
+                    {% else %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <p>Está seguro de borrar la lista de precios "{{ object }}"?</p>
+                        {{ form }}
+                        <button type="submit" class="btn btn-info">Borrar lista de precios</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

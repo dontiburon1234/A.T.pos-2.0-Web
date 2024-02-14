@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de Muestra de tabla</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+</head>
+
+<body>
+
+    <br>
+    <section class="content" style="display: grid; place-items: center;">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Configuración de tabla</h3>
+                </div>
+                <div class="card-body">
+                    <table id="myTable" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Office</th>
+                                <th>Age</th>
+                                <th>Start date</th>
+                                <th>Salary</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Tiger Nixon</td>
+                                <td>System Architect</td>
+                                <td>Edinburgh</td>
+                                <td>61</td>
+                                <td>2011-04-25</td>
+                                <td>$320,800</td>
+                            </tr>
+
+                            <tr>
+                                <td>Donna Snider</td>
+                                <td>Customer Support</td>
+                                <td>New York</td>
+                                <td>27</td>
+                                <td>2011-01-25</td>
+                                <td>$112,000</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Office</th>
+                                <th>Age</th>
+                                <th>Start date</th>
+                                <th>Salary</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="card-footer text-muted">
+                    <button  type="button" class="btn btn-primary">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+</body>
+
+</html>

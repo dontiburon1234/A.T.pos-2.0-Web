@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="card text-center centrar" style="width: 22rem;">
+<div class="hold-transition login-page">
+  <div class="login-box">
+    <div class="card">
+      <div class="card-body login-card-body">
+        <div class="login-logo">
+          <img src="{% static 'img/LogoATpos200px.png' %}" class="img-responsive" style="padding:10px">
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+          <h2 class="login-box-msg">Confirmación</h2>
+          <h4>Te hemos enviado un correo con un enlance para ingresar los datos de tu empresa. :D</h4>
+        </div>
+        <!-- /.login-box-body -->
+      </div>
+      <!-- /.login-box -->
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}

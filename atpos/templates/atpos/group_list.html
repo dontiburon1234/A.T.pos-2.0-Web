@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Listado de cargos</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i></button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="card">
+                <div class="card-body">
+                    <table id="example2" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Cargo</th>
+                            <th>Acción</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for group in object_list %}
+                        <tr><td>{{ group.name }}</td>
+                            <td>
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <div class="mx-auto">
+                                        <a class="btn btn-warning" href="{% url 'group-update' group.id %}">
+                                            <i class=" fa fa-pencil-alt"></i>
+                                        </a>
+                                        <a class="btn btn-danger" href="{% url 'group-delete' group.id %}">
+                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>Cargo</th>
+                            <th>Acción</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <div class="card-footer">
+                <a href="{% url 'group-crear' %}">
+                    <button type="button" class="btn btn-info" >Crear cargo</button>
+                </a>
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            <i class="far fa-smile"></i>
+        </div>
+        <!-- /.card-footer-->
+    </div>
+    <!-- /.card -->
+</section>
+<!-- /.content -->
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<br>
+<!-- Main content -->
+<section class="content" style="display: grid; place-items: center;">
+  <!-- Default box -->
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Modificar usuario</h3>
+      </div>
+      <div class="card-body">
+        <form method="post">
+          {% csrf_token %}
+
+          {% for field in form %}
+          {{ field.label_tag }}
+          <div class="form-group">
+            {% if field.errors %}
+            <div class="alert alert-danger" role="alert">
+              {% for error in field.errors %}
+              {{ error }}
+              {% endfor %}
+            </div>
+            {% endif %}
+            
+            {{ field }}
+            
+          </div>
+          {% endfor %}
+
+          <div class="card-footer">
+            <a href="{% url 'user_list' %}">
+              <button type="submit" class="btn btn-info">Guardar cambios</button>
+            </a>
+          </div>
+        </form>
+      </div>
+      <!-- /.card-body -->
+      <div class="card-footer">
+        <i class="far fa-smile"></i>
+      </div>
+      <!-- /.card-footer-->
+    </div>
+  </div>
+  <!-- /.card -->
+</section>
+<!-- /.content -->
+<br><br><br>
+{% endblock %}

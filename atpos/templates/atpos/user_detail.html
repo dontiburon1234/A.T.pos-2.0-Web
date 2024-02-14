@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<br>
+<section class="content" style="display: grid; place-items: center;">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Detalle de usuario</h3>
+            </div>
+            <div class="card-body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Datos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> Nombre de usuario: {{ object.username }}</td>
+                        </tr>
+                        <tr>
+                            <td>Nombre: {{object.first_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Apellido: {{object.last_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>E-mail: {{object.email}}</td>
+                        </tr>
+                        <tr>
+                            <td>Teléfono: {{object.tel_inicial}}</td>
+                        </tr>
+                        <tr>
+                            <td>Cargo: 
+                                <ul>
+                                    {% for gu in grupos_usuario %}
+                                    <li>{{gu}}</li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Permisos individuales:
+                                <ul>
+                                    {% for pi in permisos_individuales %}
+                                    <li>{{pi}}</li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            {% if object.is_active == True %}
+                            <td>Estado: Activo</td>
+                            {% else %}
+                            <td>Estado: Inactivo</td>
+                            {% endif %}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+                <i class="far fa-smile"></i>
+            </div>
+            <!-- /.card-footer-->
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+
+{% endblock %}

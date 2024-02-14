@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<br>
+<!-- Main content -->
+<section class="content" style="display: grid; place-items: center;">
+    {% if object_list %}
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-header">
+                <h1>Listado de unidades de medida</h1>
+            </div>
+            <div class="card-body">
+
+                <table id="example2" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Código UM</th>
+                            <th>Nombre UM</th>
+                            <th>Estado UM</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for unidadmedida in object_list %}
+                        <tr>
+                            <td>{{unidadmedida.codigo_unidad_medida}}</td>
+                            <td>{{unidadmedida.nombre_unidad_medida}}</td>
+
+                            {% if unidadmedida.estado == '1' %}
+                            <td><button id="{{ unidadmedida.id }}" class="btn btn-success">Activa</button></td>
+                            {% else %}
+                            <td><button id="{{ unidadmedida.id }}" class="btn btn-danger">Inactiva</button></td>
+                            {% endif %}
+
+                            <td>
+                                <a class="btn btn-info" href="{% url 'unidadmedida-update' unidadmedida.id %}">
+                                    <i class="fas fa-pen"></i></a>
+                                <a class="btn btn-danger" href="{% url 'unidadmedida-delete' unidadmedida.id %}">
+                                        <i class="fas fa-times"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Código UM</th>
+                            <th>Nombre UM</th>
+                            <th>Estado UM</th>
+                            <th>Acción</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="card-footer">
+                <a href="{% url 'unidadmedida-add' %}">
+                    <button type="submit" class="btn btn-info">Crear unidad de medida</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <p>No se han creado unidades de medida, son necesarias antes de crear los artículos</p>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'unidadmedida-add' %}">
+                    <button type="submit" class="btn btn-info">Crear unidad de medida</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+</section>
+{% endblock %}

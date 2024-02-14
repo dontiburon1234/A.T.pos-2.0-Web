@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<br>
+<!-- Main content -->
+<section class="content" style="display: grid; place-items: center;">
+    <!-- Default box -->
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Listado de usuarios</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="myTable" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>User name</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Teléfono</th>
+                                <th>Estado</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for usuario in object_list %}
+                            <tr>
+                                <td>{{ usuario.username }}</td>
+                                <td>{{ usuario.first_name }}</td>
+                                <td>{{ usuario.last_name }}</td>
+                                <td>{{ usuario.tel_inicial}}</td>
+
+                                {% if usuario.is_active == True %}
+                                <td><button id="boton_estado_{{usuario.id}}"
+                                        onclick="cambiarEstado('{{usuario.id}}', 'usuario')"
+                                        class="btn btn-success activo">Activo</button></td>
+                                {% else %}
+                                <td><button id="boton_estado_{{usuario.id}}"
+                                        onclick="cambiarEstado('{{usuario.id}}', 'usuario')"
+                                        class="btn btn-danger inactivo">Inactivo</button></td>
+                                {% endif %}
+                                <td>
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <div class="mx-auto">
+                                            <a class="btn btn-secondary" href="{% url 'usuario_detail' usuario.id %}">
+                                                <i class="fas fa-list"></i></a>
+
+                                            <a class="btn btn-info" href="{% url 'usuario_update' usuario.id %}">
+                                                <i class="fas fa-pen"></i></a>
+                                            <a class="btn btn-warning"
+                                                href="{% url 'usuario_update_password' usuario.id %}">
+                                                <i class="fas fa-key"></i></a>
+                                            <a class="btn btn-light"
+                                                href="{% url 'usuario_grupos_permisos' usuario.id %}">
+                                                <i class="fa-solid fa-people-group"></i></a>
+                                            <a class="btn btn-danger" href="{% url 'usuario-delete' usuario.id %}">
+                                                <i class="fa fa-times"></i></a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'usuario_crear' %}">
+                    <button type="button" class="btn btn-info">Crear usuario</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        var table = $('#myTable').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+
+            "language": {
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            }
+        });
+        new $.fn.dataTable.FixedHeader( table );
+    });
+</script>
+
+{% endblock %}

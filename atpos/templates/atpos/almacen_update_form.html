@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<br>
+<section class="content" style="display: grid; place-items: center;">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h1>Almacén actualizar</h1>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="card-footer">
+                        <a href="{% url 'almacen-list' %}">
+                            <button type="submit" class="btn btn-info">Guardar cambios</button>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br><br>
+</section>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<br>
+<section class="content" style="display: grid; place-items: center;">
+    <div class="col-md-4">
+        <div class="card">
+            {% if error == 'error' %}
+            <div class="card-header">
+                <h1>Error al eliminar la categoría {{ categoria }}</h1>
+            </div>
+            <div class="card-body">
+                <p>{{ mensaje }}</p>
+                <a href="{% url 'categoria-list' %}"><button type="text" class="btn btn-info">Lista de categorías</button></a>
+            </div>
+            {% else %}
+            <div class="card-header">
+                <h1>Eliminar categoría</h1>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <p>Está seguro que quiere borrar la categoría "{{ object }}"?</p>
+                    {{ form }}
+                    <input type="submit" value="Confirm">
+                </form>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

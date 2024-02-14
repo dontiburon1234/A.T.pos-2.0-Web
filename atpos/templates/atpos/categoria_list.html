@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<br>
+<section class="content" style="display: grid; place-items: center;">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h1>Categoría</h1>
+            </div>
+            <div class="card-body">
+                <table id="example2" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Padre</th>
+                            <th>Estado categoria</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for categoria in object_list %}
+                        <tr>
+                            <td>{{categoria.nombre_categoria}}</td>
+                            <td>{{categoria.categoria_padre}}</td>
+                            <td>
+                                {% if categoria.estado_categoria == '1' %}
+                                <button id="{{categoria.id}}" class="btn btn-success activo">Activo</button>
+                                {% else %}
+                                <button id="{{categoria.id}}" class="btn btn-danger inactivo">Inactivo</button>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <div class="mx-auto">
+                                        <a class="btn btn-info"
+                                            href="{% url 'categoria-list-articulos' categoria.id %}">
+                                            <i class="fas fa-list-alt"></i></a>
+                                        <a class="btn btn-info" href="{% url 'categoria-update' categoria.id %}">
+                                                <i class="fas fa-pen"></i></a>
+                                        <a class="btn btn-danger" href="{% url 'categoria-delete' categoria.id %}">
+                                                <i class="fas fa-times"></i></a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Padre</th>
+                            <th>Estado categoria</th>
+                            <th>Acción</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="card-footer">
+                <a href="{% url 'categoria-add' %}">
+                    <button type="button" class="btn btn-info">Crear categoría</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        var table = $('#myTable').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+
+            "language": {
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            }
+        });
+        new $.fn.dataTable.FixedHeader(table);
+    });
+</script>
+
+{% endblock %}

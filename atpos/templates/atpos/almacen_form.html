@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<br>
+<section class="content" style="display: grid; place-items: center;">
+    <!-- Default box -->
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Creación de almacén</h3>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p}}
+                    <input type="submit" value="Save">
+                </form>
+                
+                <br><br>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+<form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="inputNombreSlmacen">Nombre del almacén</label>
+                        <input type="text" class="form-control" name="nombre_almacen" id="input_nombre_almacen" placeholder="Nombre">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPrefijo">Prefijo</label>
+                        <input type="text" class="form-control" name="prefijo" id="inputPrefijo" placeholder="prefijo">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputTelefonoFijo">Telefono fijo</label>
+                        <input type="number" class="form-control" name="telefono_fijo" id="input_telefono_fijo" placeholder="teléfono fijo">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputTelefonoCelular">Teléfono celular</label>
+                        <input type="number" class="form-control" name="telefono_celular" id="input_telefono_celular" placeholder="teléfono celular">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputDireccionAlmacen">Dirección almacen</label>
+                        <input type="text" class="form-control" name="direccion_almacen" id="input_direccion_almacen" placeholder="Dirección almacen">
+                    </div>
+                    <div class="form-group">
+                        <label for="FormControlSelectListaprecio">lista de precios</label>
+                        <select name="listaprecios" class="form-control" id="FormControlSelectListaprecio">
+                            {% for lp in listaprecios %}
+                                <option value="{{ lp.id }}">{{ lp.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputCiudad">Ciudad</label>
+                        <input type="text" class="form-control" name="ciudad" id="input_ciudad" placeholder="Ciudad">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEstado">Estado</label>
+                        {{ form.estado }}
+                    </div>
+
+                    <input type="submit" value="Save">
+                </form>

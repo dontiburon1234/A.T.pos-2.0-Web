@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<br>
+<section class="content" style="display: grid; place-items: center;">
+    {% if object %}
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h1>Actualización de unidades de medida</h1>
+            </div>
+            <div class="card-body">
+                <form method="post" class="form-horizontal">
+                    {% csrf_token %}
+                    <table>
+                        {{ form.as_table }}
+                    </table>
+                    <input type="submit" value="Save">
+                </form>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <p>Aún no se tiene unidades de medida para actualizar</p>
+    {% endif %}
+</section>
+{% endblock %}

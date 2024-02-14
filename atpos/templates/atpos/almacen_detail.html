@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<br>
+<section class="content" style="display: grid; place-items: center;">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h1>Almacén</h1>
+            </div>
+            <div class="card-body">
+                <h3>{{ almacen.nombre_almacen }}</h3>
+                <p>Prefijo: {{ almacen.prefijo }}</p>
+                <p>Teléfono fijo: {{ almacen.telefono_fijo }}</p>
+                <p>Teléfono celular: {{ almacen.telefono_celular }}</p>
+                <p>Dirección: {{ almacen.direccion_almacen }}</p>
+                <p>Ciudad: {{ almacen.ciudad }}</p>
+                {% if almacen.estado == '1' %}
+                <p>Estado: Activo</p>
+                {% else %}
+                <p>Estado: Inactivo</p>
+                {% endif %}
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'almacen-list' %}">
+                    <button type="button" class="btn btn-info">Listado</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

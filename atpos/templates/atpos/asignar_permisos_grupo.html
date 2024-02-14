@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<script src="{% static 'atpos/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'atpos/bootstrap4-duallistbox/bootstrap-duallistbox.css' %}">
+
+<br>
+<section class="content" style="display: grid; place-items: center;">
+
+  <div class="col-md-10">
+    <div class="card">
+      <div class="card-header">
+        <div class="alert alert-success" role="alert">
+          {{ idGrupo }} - {{ nombreGrupo }}
+        </div>
+      </div>
+
+      <div class="card-body">
+        <form id="demoform" action="#" method="post">
+          <input value="{{ idGrupo }}" name="idGrupo" hidden>
+
+          <select multiple="multiple" size="10" name="duallistbox" title="duallistbox" class="duallistbox">
+            {% for pd in permisosDisponibles %}
+            <option value="{{ pd.id }}" {% if pd.id in permisosGrupo %}selected="selected" {% endif %}>{{ pd.name }}
+            </option>
+            {% endfor %}
+          </select>
+
+          <br>
+          <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+        </form>
+      </div>
+    </div>
+</section>
+
+<script>
+
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+
+  <!-- archivo.js -->
+  var demo1 = $('select[name="duallistbox"]').bootstrapDualListbox(
+    {
+      // Configuración de opciones
+      infoTextEmpty: 'No hay elementos seleccionados',  // Título cuando no hay elementos seleccionados
+      infoText: 'Seleccionados {0} elementos',         // Título cuando hay elementos seleccionados
+      infoTextFiltered: '<span class="label label-warning">Filtrados</span> {0} de {1}', // Título cuando se filtran elementos
+      filterTextClear: 'Mostrar todos',                // Texto del botón para limpiar el filtro
+      filterPlaceHolder: 'Filtrar',                    // Placeholder del campo de filtro
+      moveSelectedLabel: 'Mover seleccionados',        // Texto del botón para mover elementos seleccionados
+      moveAllLabel: 'Mover todos',                     // Texto del botón para mover todos los elementos
+      removeSelectedLabel: 'Eliminar seleccionados',  // Texto del botón para eliminar elementos seleccionados
+      removeAllLabel: 'Eliminar todos',               // Texto del botón para eliminar todos los elementos
+    }
+  );
+
+  $("#demoform").submit(function (e) {
+    e.preventDefault(); // Evitar que el formulario se envíe normalmente
+    var formData = $('[name="duallistbox"]').val()
+    var idGrupo = $('[name="idGrupo"]').val();
+    console.log(formData, idGrupo); // ['3', '23']
+
+    // Realizar la petición AJAX al servidor para cambiar el estado
+    fetch(`/recibir_permisos_grupo/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken'), // Obtener el token CSRF de las cookies
+      },
+      body: JSON.stringify({ formData: formData, idGrupo: idGrupo }) // JSON.stringify({ id: id, tipo: tipo }),
+    })
+      .then(response => response)
+      .then(data => {
+        if (data.status === 200) {
+          location.replace('/crear_grupo/');
+        } else {
+          alert('Se ha presentado un error informe al administrador')
+        }
+      })
+      .catch(error => console.error('Error:', error));
+  });
+
+</script>
+
+{% endblock %}

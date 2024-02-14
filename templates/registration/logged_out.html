@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="card text-center centrar" style="width: 22rem;">
+<div class="hold-transition login-page">
+    <div class="login-box">
+        <div class="card">
+            <div class="card-body login-card-body">
+                <div class="login-logo">
+                    <img src="{% static 'img/LogoATpos200px.png' %}" class="img-responsive">
+                </div>
+                <p>¡Hasta pronto!</p>
+                <a href="{% url 'login'%}">Click aquí para ingresar nuevamente.</a>
+            </div>
+            <!-- /.login-card-body -->
+        </div>
+    </div>
+    <!-- /.login-box -->
+</div>
+</div>
+{% endblock %}

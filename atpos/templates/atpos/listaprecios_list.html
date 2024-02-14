@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<br>
+<section class="content" style="display: grid; place-items: center;">
+    {% if object_list %}
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-header">
+                <h3>Lista de precios</h3>
+            </div>
+            <div class="card-body">
+                <table id="myTable" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for listaprecios in object_list %}
+                        <tr>
+                            <td>{{listaprecios.nombre}}</td>
+                            <td>{{listaprecios.descripcion}}</td>
+                            <td>
+                                {% if listaprecios.estado == '1' %}
+                                <button id="boton_estado_{{listaprecios.id}}"
+                                    onclick="cambiarEstado('{{listaprecios.id}}', 'listaprecios')"
+                                    class="btn btn-success activo">Activo</button>
+                                {% else %}
+                                <button id="boton_estado_{{listaprecios.id}}"
+                                    onclick="cambiarEstado('{{listaprecios.id}}', 'listaprecios')"
+                                    class="btn btn-danger inactivo">Inactivo</button>
+                                {% endif %}
+                                <a class="btn btn-info" href="{% url 'listaprecios-update' listaprecios.id %}">
+                                    <i class="fas fa-pen"></i></a>
+                                <a class="btn btn-danger" href="{% url 'listaprecios-delete' listaprecios.id %}">
+                                    <i class="fas fa-times"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'listaprecios-add' %}">
+                    <button type="submit" class="btn btn-info">Crear lista de precios</button>
+                </a>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <p>No se han creado listas de precios</p>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'listaprecios-add' %}">
+                        <button type="submit" class="btn btn-info">Crear lista de precios</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</section>
+
+<script>
+    $(document).ready(function () {
+        var table = $('#myTable').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+
+            "language": {
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            }
+        });
+        new $.fn.dataTable.FixedHeader(table);
+    });
+</script>
+{% endblock %}

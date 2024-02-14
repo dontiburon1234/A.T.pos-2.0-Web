@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<br>
+<section class="content" style="display: grid; place-items: center;">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h1>Caja</h1>
+            </div>
+            <div class="card-body">
+
+                <p>Prefijo: {{ caja.prefijo }}</p>
+                <p>Tipo factura: {{ caja.tipo_factura }}</p>
+                <p>Estado: {{ caja.estado }}</p>
+                <p>Almacén: {{ caja.almacen }}</p>
+                {% if caja.estado == '1' %}
+                <p>Estado: Activo</p>
+                {% else %}
+                <p>Estado: Inactivo</p>
+                {% endif %}
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'caja-list' %}">
+                    <button type="button" class="btn btn-info">Listado</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

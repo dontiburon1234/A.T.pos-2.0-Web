@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="card text-center centrar" style="width: 22rem;">
+<div class="hold-transition login-page">
+  <div class="login-box">
+    <div class="card">
+      <div class="card-body login-card-body">
+        <div class="login-logo">
+          <img src="{% static 'img/LogoATpos200px.png' %}" class="img-responsive">
+        </div>
+        <!-- /.login-logo -->
+        <p class="login-box-msg">Inicia sesión para comenzar tu sesión</p>
+        <form method="post">
+          {% csrf_token %}
+          <div class="input-group mb-3">
+            <input id="username" type="text" class="form-control" name="username" placeholder="Identificación" autocomplete="username" required>
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-id-card-alt"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="password" class="form-control" name="password" placeholder="Contraseña" autocomplete="current-password">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-8">
+              <div class="icheck-primary">
+                <input type="checkbox" id="remember">
+                <label for="remember">
+                  Remember Me
+                </label>
+              </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-4">
+              <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+            </div>
+            <!-- /.col -->
+          </div>
+        </form>
+
+        {% if form.errors %}
+        <div class="row mt-2">
+          <div class="alert alert-danger text-center">
+            <p>Su nombre de usuario y/o contraseña no coinciden. Por favor intente nuevamente.</p>
+          </div>
+        </div>
+        {% endif %}
+
+        <p class="mb-1">
+          <a href="{% url 'password_reset' %}">¿Olvidó su contraseña?</a>
+        </p>
+        <p class="mb-0">
+          <a href="{%  url 'create_account'%}" class="text-center">Registre su negocio</a>
+        </p>
+      </div>
+      <!-- /.login-card-body -->
+    </div>
+  </div>
+  <!-- /.login-box -->
+</div>
+</div>
+{% endblock %}

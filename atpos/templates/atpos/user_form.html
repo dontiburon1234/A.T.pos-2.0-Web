@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<br>
+<!-- Main content -->
+<section class="content" style="display: grid; place-items: center;">
+    <!-- Default box -->
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card">
+                <div class="card-body">
+
+                    <form method="post">
+                        <p>Creación de usuarios</p>
+                        {% csrf_token %}
+
+                        {% for field in form %}
+                        <div class="form-group">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.name == 'username' or field.name == 'password' %}
+                                {% if field.errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    {% for error in field.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-info">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
